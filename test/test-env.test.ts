@@ -111,6 +111,10 @@ describe("installTestEnv", () => {
             },
           },
         },
+        plugins: {
+          enabled: true,
+          bundledDiscovery: false,
+        },
       }`,
     );
     writeFile(path.join(realHome, ".openclaw", "credentials", "token.txt"), "secret\n");
@@ -184,6 +188,9 @@ describe("installTestEnv", () => {
       block: { enabled: true },
       preview: { chunk: { minChars: 120 } },
     });
+    expect(
+      (copiedConfig as { plugins?: Record<string, unknown> }).plugins?.bundledDiscovery,
+    ).toBeUndefined();
 
     expect(
       fs.existsSync(path.join(testEnv.tempHome, ".openclaw", "credentials", "token.txt")),
